@@ -6,6 +6,8 @@
 -- Время создания: Сен 09 2024 г., 00:07
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.2.0
+CREATE DATABASE users;
+USE users;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;

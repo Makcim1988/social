@@ -1,9 +1,9 @@
 <meta charset="utf-8">
 <?php
-$host = 'localhost';
+$host = 'MySQL-8.0';
 $user = 'root';
 $password = '';
-$name = 'users';
+$name = 'social';
 
 $link = mysqli_connect($host, $user, $password, $name);
 mysqli_query($link, "SET NAMES 'utf8'");

@@ -8,28 +8,28 @@ $name = 'social';
 
 $link = mysqli_connect($host, $user, $pass, $name);*/
 
-require_once 'users_connect.php';
+include 'users_connect.php';
 
 if (!empty($_POST['login']) and !empty($_POST['password'])) {
     $login = $_POST['login'];
-    $password = $_POST['password'];
 
-    $query = "SELECT * FROM users WHERE login='$login' AND password='$password'";
+    $query = "SELECT * FROM users WHERE login='$login'";
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
     $user = mysqli_fetch_assoc($result);
 
     if(!empty($user)) {
-        //$_SESSION['flash'] = 'Вы успешно авторизовались!';
-        //echo $_SESSION['flash'];
-        //header('Location: index.php');
-        //ob_end_flush();
-        //echo 'Вы успешно авторизовались!';
-        $_SESSION['auth'] = true;
-        $_SESSION['login'] = $login;
-        header('Location: index.php');
-        ob_end_flush();
+		$hash = $user['password'];
+		
+		if (password_verify($_POST['password'], $hash)) {
+			$_SESSION['auth'] = true;
+			$_SESSION['login'] = $login;
+			header('Location: index.php');
+			ob_end_flush();// все ок, авторизуем...
+		} else {
+			echo 'Пароль введен не верно';// пароль не подошел, выведем сообщение
+		}
     } else {
-        echo 'Логин или пароль введен неверно';
+        echo 'Такого логина не существует';
         echo '<a href="login.php">Авторизация</a>';
     }
 
