@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 <?php
-$host = 'MySQL-8.0';
+$host = 'localhost';
 $user = 'root';
 $password = '';
 $name = 'social';

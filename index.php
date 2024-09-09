@@ -7,24 +7,37 @@ session_start();
 ?>
 <!DOCTYPE html>
 <html>
-	<head>
-		
-	</head>
-	<body>
-		<p>текст для любого пользователя</p>
-        <a href="login.php">Авторизация</a>
-        <a href="register.php">Регистрация</a>
-        <?php 
-            
-            if(!empty($_SESSION['auth'])) {
-                echo $_SESSION['login'] . ' ';
-                echo 'текст для авторизованного пользователя';
-                echo '<a href="logout.php">Выйти</a>';
-            } else {
-                echo 'Вы не авторизованы';
-            }
-        ?>
-    </body>
+<head>
+
+</head>
+<body>
+<main class="main-section">
+    <div class="main-logo">
+        <h1 class="main-title">
+            ЧАТИК
+        </h1>
+        <p class="main-text">
+            ЧАТИК помогает вам всегда оставаться на связи и общаться со своими знакомыми.
+        </p>
+    </div>
+    <div class="main-menu">
+        <button class="login-button"><a href="login.php">Войти</a></button>
+        <button class="register-button"><a href="register.php">Зарегистрироваться</a></button>
+        <?php
+        if (!empty($_SESSION['auth'])) { ?>
+            <section class="auth-section">
+                <?php echo '<p class="profile-name">' . $_SESSION['login']; ?>
+                <button class="profile-button"><a href="profile.php">Профиль</a></button>
+                <button class="logout-button"><a href="logout.php">Выйти</a></button>
+            </section>
+        <?php } else { ?>
+            <section class="auth-section">
+                <p class="not-auth">Вы не авторизованы</p>
+            </section>
+        <?php } ?>
+    </div>
+</main>
+</body>
 </html>
 
 
