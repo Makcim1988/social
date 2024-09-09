@@ -9,12 +9,14 @@ session_start();
 </form>
 
 <?php
-$host = 'localhost';
+/*$host = 'localhost';
 $user = 'root';
 $pass = '';
 $name = 'social';
 
-$link = mysqli_connect($host, $user, $pass, $name);
+$link = mysqli_connect($host, $user, $pass, $name);*/
+
+require_once 'users_connect.php';
 
 if(!empty($_POST['login']) and !empty($_POST['password']) and !empty($_POST['confirm'])) {
     if ($_POST['password'] == $_POST['confirm']) {
