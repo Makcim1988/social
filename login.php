@@ -1,12 +1,14 @@
 <?php
 session_start();
 
-$host = 'localhost';
+/*$host = 'localhost';
 $user = 'root';
 $pass = '';
 $name = 'social';
 
-$link = mysqli_connect($host, $user, $pass, $name);
+$link = mysqli_connect($host, $user, $pass, $name);*/
+
+require_once 'users_connect.php';
 
 if (!empty($_POST['login']) and !empty($_POST['password'])) {
     $login = $_POST['login'];
