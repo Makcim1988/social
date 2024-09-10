@@ -28,6 +28,8 @@ if (!empty($_SESSION['auth'])) {
     $query = "SELECT * FROM users WHERE login='$login'";
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
     $user = mysqli_fetch_assoc($result);
+    $name_from = $user['name'];
+    $secondname_from = $user['secondname'];
 ?>
 	<section class='user-section'>
 		<h2 class='user-title'><?=$user['name'] . ' ' . $user['secondname']?></h2>
@@ -47,7 +49,7 @@ if (!empty($_SESSION['auth'])) {
     $user = mysqli_fetch_assoc(mysqli_query($link, $query));*/
 	if (!empty($_POST['wall-message'])) {
 		$message = $_POST['wall-message'];
-		$query = "INSERT INTO wallmessage (`from_id`, `to_id`, `message`) VALUES ('$id', '$id_to', '$message')";
+		$query = "INSERT INTO wallmessage (`from_id`, `name_from`, `secondname_from`, `to_id`, `message`) VALUES ('$id', '$name_from', '$secondname_from' , '$id_to', '$message')";
         mysqli_query($link, $query);
 		$_POST['wall-message'] = '';
 		header('Location: profile.php');
@@ -60,7 +62,7 @@ if (!empty($_SESSION['auth'])) {
 	
 	$query = "SELECT * FROM wallmessage WHERE to_id='$id'";
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
-    $user2 = mysqli_fetch_assoc($result);
+    //$user2 = mysqli_fetch_assoc($result);
 	
 	for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row);
 	
@@ -70,7 +72,7 @@ if (!empty($_SESSION['auth'])) {
 	//var_dump($data);
 	foreach ($data as $elem) {
 		
-		$res .= '<p>' . $user['name'] . ' ' . $user['secondname'] . '</p>';
+		$res .= '<p>' . $elem['name_from'] . $elem['secondname_from'] . '</p>';
 		$res .= '<p>' . $elem['date_message'] . '</p>';
 		$res .= '<p>' . $elem['message'] . '</p>';
 	}

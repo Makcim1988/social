@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Хост: MySQL-8.0
--- Время создания: Сен 10 2024 г., 17:11
--- Версия сервера: 8.0.35
--- Версия PHP: 8.3.6
+-- Хост: 127.0.0.1:3306
+-- Время создания: Сен 10 2024 г., 20:48
+-- Версия сервера: 8.0.30
+-- Версия PHP: 8.1.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,10 +30,23 @@ SET time_zone = "+00:00";
 CREATE TABLE `chat` (
   `id` int NOT NULL,
   `from_id` int NOT NULL,
+  `name_from` varchar(32) COLLATE utf8mb4_general_ci NOT NULL,
+  `secondname_from` varchar(32) COLLATE utf8mb4_general_ci NOT NULL,
   `to_id` int NOT NULL,
-  `message_from` text COLLATE utf8mb4_general_ci NOT NULL,
-  `message_to` text COLLATE utf8mb4_general_ci NOT NULL
+  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `message_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Дамп данных таблицы `chat`
+--
+
+INSERT INTO `chat` (`id`, `from_id`, `name_from`, `secondname_from`, `to_id`, `message`, `message_time`) VALUES
+(1, 24, 'Василий', 'Теркин', 25, 'Привет Валера', '2024-09-10 17:32:44'),
+(2, 24, 'Василий', 'Теркин', 25, 'Валера Здорова', '2024-09-10 17:35:44'),
+(3, 25, 'Валера', 'Длинный', 24, 'Здорова, Вася', '2024-09-10 17:41:33'),
+(4, 24, 'Василий', 'Теркин', 26, 'Здорофф, Митяжофф', '2024-09-10 17:44:41'),
+(5, 26, 'Василий ', 'Митяжов', 24, 'Здоров, Василий', '2024-09-10 17:46:28');
 
 -- --------------------------------------------------------
 
@@ -72,8 +85,10 @@ INSERT INTO `users` (`id`, `login`, `password`, `name`, `secondname`, `email`, `
 CREATE TABLE `wallmessage` (
   `id` int NOT NULL,
   `from_id` int NOT NULL,
+  `name_from` varchar(32) COLLATE utf8mb4_general_ci NOT NULL,
+  `secondname_from` varchar(32) COLLATE utf8mb4_general_ci NOT NULL,
   `to_id` int NOT NULL,
-  `message` text COLLATE utf8mb4_general_ci NOT NULL,
+  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `date_message` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -81,19 +96,10 @@ CREATE TABLE `wallmessage` (
 -- Дамп данных таблицы `wallmessage`
 --
 
-INSERT INTO `wallmessage` (`id`, `from_id`, `to_id`, `message`, `date_message`) VALUES
-(71, 24, 24, 'Вася', '2024-09-10 13:39:31'),
-(72, 24, 24, 'Вася', '2024-09-10 13:39:39'),
-(73, 24, 24, 'Вася лох', '2024-09-10 13:40:01'),
-(74, 26, 25, 'Валера - лох!', '2024-09-10 13:46:37'),
-(75, 24, 25, 'Валера лошок', '2024-09-10 13:50:49'),
-(76, 25, 26, 'Вася - пидр!', '2024-09-10 13:53:42'),
-(77, 24, 26, 'Вася - пидр', '2024-09-10 13:55:16'),
-(78, 24, 25, 'Валера, как жизнь?', '2024-09-10 13:58:32'),
-(79, 25, 25, 'Заебись', '2024-09-10 13:59:16'),
-(80, 24, 24, 'Вася - бык!', '2024-09-10 14:05:26'),
-(81, 24, 24, 'Вася - бык', '2024-09-10 14:05:58'),
-(82, 24, 24, 'asd', '2024-09-10 14:07:35');
+INSERT INTO `wallmessage` (`id`, `from_id`, `name_from`, `secondname_from`, `to_id`, `message`, `date_message`) VALUES
+(84, 24, 'Василий', 'Теркин', 24, 'Привет - я Вася!', '2024-09-10 16:27:09'),
+(90, 24, 'Василий', 'Теркин', 25, 'Привет, Валера!', '2024-09-10 16:47:03'),
+(91, 25, 'Валера', 'Длинный', 26, 'Митижофф, хто гудит?', '2024-09-10 17:17:36');
 
 --
 -- Индексы сохранённых таблиц
@@ -125,7 +131,7 @@ ALTER TABLE `wallmessage`
 -- AUTO_INCREMENT для таблицы `chat`
 --
 ALTER TABLE `chat`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
@@ -137,7 +143,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `wallmessage`
 --
 ALTER TABLE `wallmessage`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

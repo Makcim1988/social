@@ -21,6 +21,12 @@ if (!empty($_SESSION['auth'])) {
     $query = "SELECT * FROM users WHERE id='$id_to'";
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
     $user = mysqli_fetch_assoc($result);
+
+    $query_from = "SELECT * FROM users WHERE id='$id'";
+    $result_from = mysqli_query($link, $query_from) or die(mysqli_error($link));
+    $user_from = mysqli_fetch_assoc($result_from);
+    $name_from = $user_from['name'];
+    $secondname_from = $user_from['secondname'];
 ?>	
 	<section class='another-user-section'>
 		<h2 class='another-user-title'>Чат с пользователем <?=$user['name'] . ' ' . $user['secondname']?></h2>
@@ -41,18 +47,18 @@ if (!empty($_SESSION['auth'])) {
     $user = mysqli_fetch_assoc(mysqli_query($link, $query));*/
 	if (!empty($_POST['chat-message'])) {
 		$message = $_POST['chat-message'];
-		$query2 = "INSERT INTO chat (`from_id`, `to_id`, `message_from, `message_to``) VALUES ('$id', '$id_to', '$message')";
+		$query2 = "INSERT INTO chat (`from_id`, `name_from`, `secondname_from`, `to_id`, `message`) VALUES ('$id', '$name_from', '$secondname_from', '$id_to', '$message')";
         mysqli_query($link, $query2);
-		$_POST['wall-message'] = '';
-		header('Location: anotheruser.php?id=' . $id_to . '');
+		$_POST['chat-message'] = '';
+		header('Location: chat.php?id=' . $id_to . '');
 		die();
 	} else {
-		echo 'Отсутсвует текст сообщения';
+		echo 'Отсутствует текст сообщения';
 	}
 	
-	$query = "SELECT * FROM wallmessage WHERE to_id='$id_to'";
+	$query = "SELECT * FROM chat WHERE (to_id='$id_to' AND from_id='$id') OR (to_id='$id' AND from_id='$id_to')";
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
-    $user = mysqli_fetch_assoc($result);
+    //$user = mysqli_fetch_assoc($result);
 	
 	for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row);
 	
@@ -65,8 +71,8 @@ if (!empty($_SESSION['auth'])) {
 		echo $elem['id'];
 		$res .= '</ul>';*/
 		
-		$res .= '<p>' . $elem['from_id'] . '</p>';
-		$res .= '<p>' . $elem['date_message'] . '</p>';
+		$res .= '<p>' . $elem['name_from'] . $elem['secondname_from'] . '</p>';
+		$res .= '<p>' . $elem['message_time'] . '</p>';
 		$res .= '<p>' . $elem['message'] . '</p>';
 	}
 	
@@ -77,4 +83,4 @@ if (!empty($_SESSION['auth'])) {
     echo 'Вы не авторизованы';
 } ?>
 </body>
-</head>
+</html>
