@@ -1,5 +1,6 @@
 <?php
 session_start();
+ob_start();
 ?>
     <form action="" method="POST">
         <input type='text' name='login' placeholder="Логин">
@@ -43,7 +44,7 @@ $pass = '';
 $name = 'social';
 
 $link = mysqli_connect($host, $user, $pass, $name);*/
-
+ob_start();
 include 'users_connect.php';
 $login = '';
 $password = '';
@@ -114,6 +115,7 @@ if (!empty($_POST['login']) and !empty($_POST['password']) and !empty($_POST['co
             $id = mysqli_insert_id($link);
             $_SESSION['id'] = $id;
             header('Location: profile.php');
+			die();
         } else {
             echo 'Пользователь с таким логином уже существует';
         }

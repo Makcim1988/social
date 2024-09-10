@@ -1,9 +1,6 @@
 <?php
 session_start();
-/*if(isset($_SESSION['flash'])) {
-    echo $_SESSION['flash'];
-    unset($_SESSION['flash']);
-}*/
+ob_start();
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,9 +21,10 @@ session_start();
         <button class="login-button"><a href="login.php">Войти</a></button>
         <button class="register-button"><a href="register.php">Зарегистрироваться</a></button>
         <?php
+		echo $_SESSION['id'];
         if (!empty($_SESSION['auth'])) { ?>
             <section class="auth-section">
-                <?php echo '<p class="profile-name">' . $_SESSION['login']; ?>
+                <?php $id = $_SESSION['id']; echo '<p class="profile-name">' . $_SESSION['login']; ?>
                 <button class="profile-button"><a href="profile.php">Профиль</a></button>
                 <button class="logout-button"><a href="logout.php">Выйти</a></button>
             </section>

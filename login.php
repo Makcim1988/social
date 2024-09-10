@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+ob_start();
 /*$host = 'localhost';
 $user = 'root';
 $pass = '';
@@ -23,6 +23,8 @@ if (!empty($_POST['login']) and !empty($_POST['password'])) {
 		if (password_verify($_POST['password'], $hash)) {
 			$_SESSION['auth'] = true;
 			$_SESSION['login'] = $login;
+			//$id = mysqli_insert_id($link);
+			$_SESSION['id'] = $user['id'];
 			header('Location: index.php');
 			ob_end_flush();// все ок, авторизуем...
 		} else {
